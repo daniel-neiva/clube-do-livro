@@ -3,7 +3,14 @@
 import { useSession, signOut } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { BookOpen, LogOut, Users, MessageSquare, BarChart3, Home } from "lucide-react";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { BookOpen, LogOut, Users, MessageSquare, BarChart3, Home, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -11,6 +18,7 @@ export function Navigation() {
   const { data: session } = useSession() || {};
   const userRole = session?.user ? session.user.role : null;
   const [unreadCount, setUnreadCount] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -66,68 +74,102 @@ export function Navigation() {
     }
   }, [pathname]);
 
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
   if (!session) {
     return null;
   }
+
+  const NavLinks = ({ mobile = false }: { mobile?: boolean }) => (
+    <>
+      <Link href="/dashboard" onClick={() => mobile && setMobileMenuOpen(false)}>
+        <Button
+          variant={pathname === '/dashboard' ? 'secondary' : 'ghost'}
+          size={mobile ? 'default' : 'sm'}
+          className={`${mobile ? 'w-full justify-start text-base' : ''} text-gray-700`}
+        >
+          <Home className="h-4 w-4 mr-2" />
+          Início
+        </Button>
+      </Link>
+
+      {userRole === 'admin' && (
+        <>
+          <Link href="/admin/stats" onClick={() => mobile && setMobileMenuOpen(false)}>
+            <Button
+              variant={pathname === '/admin/stats' ? 'secondary' : 'ghost'}
+              size={mobile ? 'default' : 'sm'}
+              className={`${mobile ? 'w-full justify-start text-base' : ''} text-gray-700`}
+            >
+              <BarChart3 className="h-4 w-4 mr-2" />
+              Estatísticas
+            </Button>
+          </Link>
+          <Link href="/admin/users" onClick={() => mobile && setMobileMenuOpen(false)}>
+            <Button
+              variant={pathname === '/admin/users' ? 'secondary' : 'ghost'}
+              size={mobile ? 'default' : 'sm'}
+              className={`${mobile ? 'w-full justify-start text-base' : ''} text-gray-700`}
+            >
+              <Users className="h-4 w-4 mr-2" />
+              Usuários
+            </Button>
+          </Link>
+          <Link href="/admin/books" onClick={() => mobile && setMobileMenuOpen(false)}>
+            <Button
+              variant={pathname === '/admin/books' ? 'secondary' : 'ghost'}
+              size={mobile ? 'default' : 'sm'}
+              className={`${mobile ? 'w-full justify-start text-base' : ''} text-gray-700`}
+            >
+              <BookOpen className="h-4 w-4 mr-2" />
+              Livros
+            </Button>
+          </Link>
+        </>
+      )}
+
+      <Link href="/messages" onClick={() => mobile && setMobileMenuOpen(false)}>
+        <Button
+          variant={pathname === '/messages' ? 'secondary' : 'ghost'}
+          size={mobile ? 'default' : 'sm'}
+          className={`${mobile ? 'w-full justify-start text-base' : ''} text-gray-700 relative`}
+        >
+          <MessageSquare className="h-4 w-4 mr-2" />
+          Mensagens
+          {unreadCount > 0 && (
+            <span className={`${mobile ? 'ml-auto' : 'absolute -top-1 -right-1'} bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center ${!mobile && 'animate-pulse'}`}>
+              {unreadCount > 9 ? '9+' : unreadCount}
+            </span>
+          )}
+        </Button>
+      </Link>
+    </>
+  );
 
   return (
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <div className="flex items-center space-x-8">
+          {/* Logo */}
+          <div className="flex items-center">
             <Link href="/dashboard" className="flex items-center space-x-2">
               <div className="bg-blue-100 p-2 rounded-lg">
                 <BookOpen className="h-5 w-5 text-blue-600" />
               </div>
               <span className="font-semibold text-lg text-gray-800">Clube do Livro</span>
             </Link>
-
-            <div className="hidden md:flex items-center space-x-4">
-              <Link href="/dashboard">
-                <Button variant="ghost" size="sm" className="text-gray-700">
-                  <Home className="h-4 w-4 mr-2" />
-                  Início
-                </Button>
-              </Link>
-
-              {userRole === 'admin' && (
-                <>
-                  <Link href="/admin/stats">
-                    <Button variant="ghost" size="sm" className="text-gray-700">
-                      <BarChart3 className="h-4 w-4 mr-2" />
-                      Estatísticas
-                    </Button>
-                  </Link>
-                  <Link href="/admin/users">
-                    <Button variant="ghost" size="sm" className="text-gray-700">
-                      <Users className="h-4 w-4 mr-2" />
-                      Usuários
-                    </Button>
-                  </Link>
-                  <Link href="/admin/books">
-                    <Button variant="ghost" size="sm" className="text-gray-700">
-                      <BookOpen className="h-4 w-4 mr-2" />
-                      Livros
-                    </Button>
-                  </Link>
-                </>
-              )}
-
-              <Link href="/messages">
-                <Button variant="ghost" size="sm" className="text-gray-700 relative">
-                  <MessageSquare className="h-4 w-4 mr-2" />
-                  Mensagens
-                  {unreadCount > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center animate-pulse">
-                      {unreadCount > 9 ? '9+' : unreadCount}
-                    </span>
-                  )}
-                </Button>
-              </Link>
-            </div>
           </div>
 
-          <div className="flex items-center space-x-4">
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-4">
+            <NavLinks />
+          </div>
+
+          {/* Desktop User Info */}
+          <div className="hidden md:flex items-center space-x-4">
             <div className="text-sm text-gray-600">
               <p className="font-medium">{session?.user?.name}</p>
               <p className="text-xs text-gray-500">
@@ -143,6 +185,70 @@ export function Navigation() {
               <LogOut className="h-4 w-4 mr-2" />
               Sair
             </Button>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden flex items-center space-x-2">
+            {/* Mobile notification indicator */}
+            {unreadCount > 0 && (
+              <span className="bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center animate-pulse">
+                {unreadCount > 9 ? '9+' : unreadCount}
+              </span>
+            )}
+
+            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="text-gray-700">
+                  <Menu className="h-6 w-6" />
+                  <span className="sr-only">Abrir menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[280px] sm:w-[350px]">
+                <SheetHeader className="text-left border-b pb-4 mb-4">
+                  <SheetTitle className="flex items-center space-x-2">
+                    <div className="bg-blue-100 p-2 rounded-lg">
+                      <BookOpen className="h-5 w-5 text-blue-600" />
+                    </div>
+                    <span>Menu</span>
+                  </SheetTitle>
+                </SheetHeader>
+
+                {/* User Info in Mobile */}
+                <div className="border-b pb-4 mb-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="bg-blue-100 p-2 rounded-full">
+                      <Users className="h-5 w-5 text-blue-600" />
+                    </div>
+                    <div>
+                      <p className="font-medium text-gray-800">{session?.user?.name}</p>
+                      <p className="text-sm text-gray-500">
+                        {userRole === 'admin' ? 'Administrador' : 'Participante'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Mobile Navigation Links */}
+                <div className="flex flex-col space-y-2">
+                  <NavLinks mobile />
+                </div>
+
+                {/* Logout Button */}
+                <div className="mt-6 pt-4 border-t">
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      signOut({ callbackUrl: '/login' });
+                    }}
+                  >
+                    <LogOut className="h-4 w-4 mr-2" />
+                    Sair da conta
+                  </Button>
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>
