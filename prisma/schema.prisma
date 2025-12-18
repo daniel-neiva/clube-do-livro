@@ -1,0 +1,161 @@
+generator client {
+    provider = "prisma-client-js"
+    binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
+
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+// NextAuth Models
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// User Model
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  password      String?
+  image         String?
+  phone         String?
+  church        String?
+  city          String?
+  role          String    @default("participant") // "admin" or "participant"
+  isFirstUser   Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts        Account[]
+  sessions        Session[]
+  readingProgress ReadingProgress[]
+  checkIns        CheckIn[]
+  messages        Message[]
+
+  @@index([email])
+  @@index([role])
+}
+
+// Book Model
+model Book {
+  id             String   @id @default(cuid())
+  title          String
+  author         String
+  totalChapters  Int
+  durationWeeks  Int // 4, 6, or 8 weeks
+  startDate      DateTime
+  meetingDates   String[] // Array of meeting dates (ISO strings)
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  chapters        Chapter[]
+  checkIns        CheckIn[]
+
+  @@index([isActive])
+}
+
+// Chapter Model
+model Chapter {
+  id            String   @id @default(cuid())
+  bookId        String
+  chapterNumber Int
+  weekNumber    Int
+  createdAt     DateTime @default(now())
+
+  book            Book              @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  readingProgress ReadingProgress[]
+
+  @@unique([bookId, chapterNumber])
+  @@index([bookId])
+  @@index([weekNumber])
+}
+
+// Reading Progress Model
+model ReadingProgress {
+  id        String   @id @default(cuid())
+  userId    String
+  chapterId String
+  isRead    Boolean  @default(false)
+  readAt    DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chapter Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, chapterId])
+  @@index([userId])
+  @@index([chapterId])
+}
+
+// Check-In Model
+model CheckIn {
+  id          String   @id @default(cuid())
+  userId      String
+  bookId      String
+  weekNumber  Int
+  reflection1 String?  @db.Text // "O que mais te chamou atenção?"
+  reflection2 String?  @db.Text // "Algo te confrontou ou edificou?"
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  book Book @relation(fields: [bookId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, bookId, weekNumber])
+  @@index([userId])
+  @@index([bookId])
+  @@index([weekNumber])
+}
+
+// Message Model (Admin -> Participants communication)
+model Message {
+  id        String   @id @default(cuid())
+  content   String   @db.Text
+  authorId  String
+  createdAt DateTime @default(now())
+
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([authorId])
+  @@index([createdAt])
+}
