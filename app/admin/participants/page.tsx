@@ -36,33 +36,33 @@ export default function ParticipantsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
         <Navigation />
         <div className="flex items-center justify-center h-96">
-          <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
       <Navigation />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">Participantes</h1>
-          <p className="text-gray-600">Lista de todos os participantes do clube</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Participantes</h1>
+          <p className="text-muted-foreground">Lista de todos os participantes do clube</p>
         </div>
 
         <Card className="shadow-md mb-6">
           <CardHeader>
             <CardTitle className="flex items-center">
-              <Users className="h-5 w-5 mr-2 text-blue-600" />
+              <Users className="h-5 w-5 mr-2 text-primary" />
               Total de Participantes
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-4xl font-bold text-gray-800">{participants.length}</p>
+            <p className="text-4xl font-bold text-foreground">{participants.length}</p>
           </CardContent>
         </Card>
 
@@ -74,11 +74,11 @@ export default function ParticipantsPage() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-2 text-sm">
-                  <div className="flex items-center text-gray-600">
+                  <div className="flex items-center text-muted-foreground">
                     <Mail className="h-4 w-4 mr-2" />
                     <span className="truncate">{participant.email}</span>
                   </div>
-                  <div className="flex items-center text-gray-600">
+                  <div className="flex items-center text-muted-foreground">
                     <Calendar className="h-4 w-4 mr-2" />
                     <span>
                       Entrou em {format(new Date(participant.createdAt), "d 'de' MMMM, yyyy", { locale: ptBR })}
@@ -94,7 +94,7 @@ export default function ParticipantsPage() {
           <Card className="shadow-md">
             <CardContent className="py-12 text-center">
               <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600">Nenhum participante cadastrado ainda</p>
+              <p className="text-muted-foreground">Nenhum participante cadastrado ainda</p>
             </CardContent>
           </Card>
         )}

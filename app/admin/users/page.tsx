@@ -148,27 +148,27 @@ export default function UsersPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+            <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
                 <Navigation />
                 <div className="flex items-center justify-center h-96">
-                    <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
             <Navigation />
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-800 mb-2">Gerenciar Usuários</h1>
-                        <p className="text-gray-600">Master Admin: Visualize e edite qualquer usuário</p>
+                        <h1 className="text-3xl font-bold text-foreground mb-2">Gerenciar Usuários</h1>
+                        <p className="text-muted-foreground">Master Admin: Visualize e edite qualquer usuário</p>
                     </div>
                     <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
                         <DialogTrigger asChild>
-                            <Button className="bg-blue-600 hover:bg-blue-700">
+                            <Button className="bg-primary hover:bg-primary/90">
                                 <UserPlus className="h-4 w-4 mr-2" />
                                 Adicionar Usuário
                             </Button>
@@ -313,7 +313,7 @@ export default function UsersPage() {
                                             <span
                                                 className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${user.role === "admin"
                                                     ? "bg-purple-100 text-purple-800"
-                                                    : "bg-blue-100 text-blue-800"
+                                                    : "bg-accent/20 text-primary"
                                                     }`}
                                             >
                                                 {user.role === "admin" ? (
@@ -327,7 +327,7 @@ export default function UsersPage() {
                                         </TableCell>
                                         <TableCell className="text-right space-x-2">
                                             <Link href={`/admin/users/${user.id}`}>
-                                                <Button variant="ghost" size="icon" className="h-8 w-8 text-blue-600">
+                                                <Button variant="ghost" size="icon" className="h-8 w-8 text-primary">
                                                     <Edit className="h-4 w-4" />
                                                 </Button>
                                             </Link>
@@ -345,7 +345,7 @@ export default function UsersPage() {
                                 ))}
                                 {users.length === 0 && (
                                     <TableRow>
-                                        <TableCell colSpan={5} className="text-center py-8 text-gray-500">
+                                        <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
                                             Nenhum usuário encontrado
                                         </TableCell>
                                     </TableRow>

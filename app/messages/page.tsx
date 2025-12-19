@@ -38,22 +38,22 @@ export default function MessagesPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
         <Navigation />
         <div className="flex items-center justify-center h-96">
-          <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
       <Navigation />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">Mensagens Pastorais</h1>
-          <p className="text-gray-600">Palavras de encorajamento para sua jornada</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Mensagens Pastorais</h1>
+          <p className="text-muted-foreground">Palavras de encorajamento para sua jornada</p>
         </div>
 
         <div className="space-y-4">
@@ -61,7 +61,7 @@ export default function MessagesPage() {
             <Card className="shadow-md">
               <CardContent className="py-12 text-center">
                 <MessageSquare className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-600">Nenhuma mensagem ainda</p>
+                <p className="text-muted-foreground">Nenhuma mensagem ainda</p>
               </CardContent>
             </Card>
           ) : (
@@ -70,18 +70,18 @@ export default function MessagesPage() {
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
-                      <Heart className="h-5 w-5 text-blue-600" />
-                      <span className="font-semibold text-gray-800">
+                      <Heart className="h-5 w-5 text-primary" />
+                      <span className="font-semibold text-foreground">
                         {message?.author?.name ?? 'Admin'}
                       </span>
                     </div>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-muted-foreground">
                       {format(new Date(message.createdAt), "d 'de' MMMM, yyyy", { locale: ptBR })}
                     </span>
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">
+                  <p className="text-foreground whitespace-pre-wrap leading-relaxed">
                     {message.content}
                   </p>
                 </CardContent>

@@ -47,51 +47,51 @@ export default function StatsPage() {
 
   const getProgressColor = (percentage: number) => {
     if (percentage >= 80) return "bg-green-500";
-    if (percentage >= 50) return "bg-blue-500";
+    if (percentage >= 50) return "bg-accent/100";
     if (percentage >= 25) return "bg-yellow-500";
     return "bg-red-400";
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
         <Navigation />
         <div className="flex items-center justify-center h-96">
-          <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
       <Navigation />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">Estatísticas Detalhadas</h1>
-          <p className="text-gray-600">Acompanhe o progresso geral do grupo</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Estatísticas Detalhadas</h1>
+          <p className="text-muted-foreground">Acompanhe o progresso geral do grupo</p>
         </div>
 
         {stats?.activeBook && (
           <Card className="shadow-md mb-8">
             <CardHeader>
               <CardTitle className="flex items-center">
-                <BookOpen className="h-6 w-6 mr-2 text-blue-600" />
+                <BookOpen className="h-6 w-6 mr-2 text-primary" />
                 Livro Atual
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
-                <h3 className="text-2xl font-bold text-gray-800">{stats.activeBook.title}</h3>
-                <p className="text-gray-600">por {stats.activeBook.author}</p>
+                <h3 className="text-2xl font-bold text-foreground">{stats.activeBook.title}</h3>
+                <p className="text-muted-foreground">por {stats.activeBook.author}</p>
                 <div className="flex items-center space-x-4 pt-4">
-                  <div className="bg-blue-100 px-4 py-2 rounded-lg">
-                    <p className="text-sm text-gray-600">Semana Atual</p>
-                    <p className="text-2xl font-bold text-blue-600">{stats.activeBook.currentWeek}</p>
+                  <div className="bg-accent/20 px-4 py-2 rounded-lg">
+                    <p className="text-sm text-muted-foreground">Semana Atual</p>
+                    <p className="text-2xl font-bold text-primary">{stats.activeBook.currentWeek}</p>
                   </div>
                   <div className="bg-gray-100 px-4 py-2 rounded-lg">
-                    <p className="text-sm text-gray-600">Total de Semanas</p>
-                    <p className="text-2xl font-bold text-gray-800">{stats.activeBook.totalWeeks}</p>
+                    <p className="text-sm text-muted-foreground">Total de Semanas</p>
+                    <p className="text-2xl font-bold text-foreground">{stats.activeBook.totalWeeks}</p>
                   </div>
                 </div>
               </div>
@@ -103,13 +103,13 @@ export default function StatsPage() {
           <Card className="shadow-md hover:shadow-lg transition-shadow">
             <CardHeader>
               <CardTitle className="flex items-center text-lg">
-                <Users className="h-5 w-5 mr-2 text-blue-600" />
+                <Users className="h-5 w-5 mr-2 text-primary" />
                 Participantes Ativos
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-4xl font-bold text-gray-800">{stats?.totalParticipants ?? 0}</p>
-              <p className="text-sm text-gray-600 mt-2">Total de pessoas no clube</p>
+              <p className="text-4xl font-bold text-foreground">{stats?.totalParticipants ?? 0}</p>
+              <p className="text-sm text-muted-foreground mt-2">Total de pessoas no clube</p>
             </CardContent>
           </Card>
 
@@ -121,9 +121,9 @@ export default function StatsPage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-4xl font-bold text-gray-800">{stats?.averageProgress ?? 0}%</p>
-              <p className="text-sm text-gray-600 mt-2">Média de leitura do livro</p>
-              <div className="w-full bg-gray-200 rounded-full h-2 mt-4">
+              <p className="text-4xl font-bold text-foreground">{stats?.averageProgress ?? 0}%</p>
+              <p className="text-sm text-muted-foreground mt-2">Média de leitura do livro</p>
+              <div className="w-full bg-muted rounded-full h-2 mt-4">
                 <div
                   className="bg-green-600 h-2 rounded-full transition-all duration-500"
                   style={{ width: `${stats?.averageProgress ?? 0}%` }}
@@ -140,8 +140,8 @@ export default function StatsPage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-4xl font-bold text-gray-800">{stats?.notReadingThisWeek ?? 0}</p>
-              <p className="text-sm text-gray-600 mt-2">
+              <p className="text-4xl font-bold text-foreground">{stats?.notReadingThisWeek ?? 0}</p>
+              <p className="text-sm text-muted-foreground mt-2">
                 Participantes que ainda não marcaram nenhum capítulo
               </p>
             </CardContent>
@@ -163,14 +163,14 @@ export default function StatsPage() {
             <CardContent>
               <div className="space-y-4">
                 {stats.userProgress.map((user) => (
-                  <div key={user.id} className="bg-gray-50 p-4 rounded-lg">
+                  <div key={user.id} className="bg-secondary p-4 rounded-lg">
                     <div className="flex justify-between items-center mb-2">
-                      <span className="font-medium text-gray-800">{user.name}</span>
-                      <span className="text-sm text-gray-600">
+                      <span className="font-medium text-foreground">{user.name}</span>
+                      <span className="text-sm text-muted-foreground">
                         {user.chaptersRead}/{user.totalChapters} capítulos ({user.percentage}%)
                       </span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-3">
+                    <div className="w-full bg-muted rounded-full h-3">
                       <div
                         className={`${getProgressColor(user.percentage)} h-3 rounded-full transition-all duration-500`}
                         style={{ width: `${user.percentage}%` }}
@@ -191,9 +191,9 @@ export default function StatsPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4 text-gray-700">
-              <div className="bg-blue-50 p-4 rounded-lg">
-                <p className="font-semibold text-blue-800 mb-2">✨ Lembre-se:</p>
+            <div className="space-y-4 text-foreground">
+              <div className="bg-accent/10 p-4 rounded-lg">
+                <p className="font-semibold text-primary mb-2">✨ Lembre-se:</p>
                 <ul className="space-y-2 text-sm">
                   <li>• Esses números são para <strong>acompanhamento</strong>, não para cobrança</li>
                   <li>• Cada pessoa tem seu próprio ritmo de crescimento</li>

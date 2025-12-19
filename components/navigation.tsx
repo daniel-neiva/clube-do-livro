@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/sheet";
 import { BookOpen, LogOut, Users, MessageSquare, BarChart3, Home, Menu, X } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 export function Navigation() {
@@ -89,7 +90,7 @@ export function Navigation() {
         <Button
           variant={pathname === '/dashboard' ? 'secondary' : 'ghost'}
           size={mobile ? 'default' : 'sm'}
-          className={`${mobile ? 'w-full justify-start text-base' : ''} text-gray-700`}
+          className={`${mobile ? 'w-full justify-start text-base' : ''} text-foreground`}
         >
           <Home className="h-4 w-4 mr-2" />
           Início
@@ -102,7 +103,7 @@ export function Navigation() {
             <Button
               variant={pathname === '/admin/stats' ? 'secondary' : 'ghost'}
               size={mobile ? 'default' : 'sm'}
-              className={`${mobile ? 'w-full justify-start text-base' : ''} text-gray-700`}
+              className={`${mobile ? 'w-full justify-start text-base' : ''} text-foreground`}
             >
               <BarChart3 className="h-4 w-4 mr-2" />
               Estatísticas
@@ -112,7 +113,7 @@ export function Navigation() {
             <Button
               variant={pathname === '/admin/users' ? 'secondary' : 'ghost'}
               size={mobile ? 'default' : 'sm'}
-              className={`${mobile ? 'w-full justify-start text-base' : ''} text-gray-700`}
+              className={`${mobile ? 'w-full justify-start text-base' : ''} text-foreground`}
             >
               <Users className="h-4 w-4 mr-2" />
               Usuários
@@ -122,7 +123,7 @@ export function Navigation() {
             <Button
               variant={pathname === '/admin/books' ? 'secondary' : 'ghost'}
               size={mobile ? 'default' : 'sm'}
-              className={`${mobile ? 'w-full justify-start text-base' : ''} text-gray-700`}
+              className={`${mobile ? 'w-full justify-start text-base' : ''} text-foreground`}
             >
               <BookOpen className="h-4 w-4 mr-2" />
               Livros
@@ -135,7 +136,7 @@ export function Navigation() {
         <Button
           variant={pathname === '/messages' ? 'secondary' : 'ghost'}
           size={mobile ? 'default' : 'sm'}
-          className={`${mobile ? 'w-full justify-start text-base' : ''} text-gray-700 relative`}
+          className={`${mobile ? 'w-full justify-start text-base' : ''} text-foreground relative`}
         >
           <MessageSquare className="h-4 w-4 mr-2" />
           Mensagens
@@ -150,16 +151,20 @@ export function Navigation() {
   );
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b shadow-sm">
+    <nav className="sticky top-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/dashboard" className="flex items-center space-x-2">
-              <div className="bg-blue-100 p-2 rounded-lg">
-                <BookOpen className="h-5 w-5 text-blue-600" />
-              </div>
-              <span className="font-semibold text-lg text-gray-800">Clube do Livro</span>
+              <Image
+                src="/logo.jpg"
+                alt="Clube do Livro"
+                width={40}
+                height={40}
+                className="rounded-lg"
+              />
+              <span className="font-semibold text-lg text-foreground">Clube do Livro</span>
             </Link>
           </div>
 
@@ -170,9 +175,9 @@ export function Navigation() {
 
           {/* Desktop User Info */}
           <div className="hidden md:flex items-center space-x-4">
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-muted-foreground">
               <p className="font-medium">{session?.user?.name}</p>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-muted-foreground">
                 {userRole === 'admin' ? 'Administrador' : 'Participante'}
               </p>
             </div>
@@ -180,7 +185,7 @@ export function Navigation() {
               variant="ghost"
               size="sm"
               onClick={() => signOut({ callbackUrl: '/login' })}
-              className="text-gray-700"
+              className="text-foreground"
             >
               <LogOut className="h-4 w-4 mr-2" />
               Sair
@@ -198,7 +203,7 @@ export function Navigation() {
 
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-gray-700">
+                <Button variant="ghost" size="icon" className="text-foreground">
                   <Menu className="h-6 w-6" />
                   <span className="sr-only">Abrir menu</span>
                 </Button>
@@ -206,9 +211,13 @@ export function Navigation() {
               <SheetContent side="right" className="w-[280px] sm:w-[350px]">
                 <SheetHeader className="text-left border-b pb-4 mb-4">
                   <SheetTitle className="flex items-center space-x-2">
-                    <div className="bg-blue-100 p-2 rounded-lg">
-                      <BookOpen className="h-5 w-5 text-blue-600" />
-                    </div>
+                    <Image
+                      src="/logo.jpg"
+                      alt="Clube do Livro"
+                      width={32}
+                      height={32}
+                      className="rounded-lg"
+                    />
                     <span>Menu</span>
                   </SheetTitle>
                 </SheetHeader>
@@ -216,12 +225,12 @@ export function Navigation() {
                 {/* User Info in Mobile */}
                 <div className="border-b pb-4 mb-4">
                   <div className="flex items-center space-x-3">
-                    <div className="bg-blue-100 p-2 rounded-full">
-                      <Users className="h-5 w-5 text-blue-600" />
+                    <div className="bg-accent/20 p-2 rounded-full">
+                      <Users className="h-5 w-5 text-primary" />
                     </div>
                     <div>
-                      <p className="font-medium text-gray-800">{session?.user?.name}</p>
-                      <p className="text-sm text-gray-500">
+                      <p className="font-medium text-foreground">{session?.user?.name}</p>
+                      <p className="text-sm text-muted-foreground">
                         {userRole === 'admin' ? 'Administrador' : 'Participante'}
                       </p>
                     </div>

@@ -91,27 +91,27 @@ export default function EditUserPage({ params }: { params: { id: string } }) {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+            <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
                 <Navigation />
                 <div className="flex items-center justify-center h-96">
-                    <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
             <Navigation />
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <Link href="/admin/users" className="flex items-center text-gray-600 hover:text-blue-600 mb-6 w-fit">
+                <Link href="/admin/users" className="flex items-center text-muted-foreground hover:text-primary mb-6 w-fit">
                     <ArrowLeft className="h-4 w-4 mr-2" />
                     Voltar para Lista de Usuários
                 </Link>
 
                 <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-gray-800 mb-2">Editar Usuário</h1>
-                    <p className="text-gray-600">Alterar dados e permissões de acesso</p>
+                    <h1 className="text-3xl font-bold text-foreground mb-2">Editar Usuário</h1>
+                    <p className="text-muted-foreground">Alterar dados e permissões de acesso</p>
                 </div>
 
                 <Card className="shadow-md">
@@ -184,25 +184,25 @@ export default function EditUserPage({ params }: { params: { id: string } }) {
                                         <SelectItem value="admin">Administrador (Master)</SelectItem>
                                     </SelectContent>
                                 </Select>
-                                <p className="text-xs text-gray-500 mt-1">
+                                <p className="text-xs text-muted-foreground mt-1">
                                     CUIDADO: Administradores têm acesso total ao sistema.
                                 </p>
                             </div>
 
                             {/* Read-only stats could go here */}
                             <div className="pt-4 border-t border-gray-100 grid grid-cols-2 gap-4">
-                                <div className="bg-gray-50 p-3 rounded text-center">
-                                    <p className="text-xs text-gray-500 uppercase">Capítulos Lidos</p>
-                                    <p className="text-xl font-bold text-blue-600">{user?._count?.readingProgress || 0}</p>
+                                <div className="bg-secondary p-3 rounded text-center">
+                                    <p className="text-xs text-muted-foreground uppercase">Capítulos Lidos</p>
+                                    <p className="text-xl font-bold text-primary">{user?._count?.readingProgress || 0}</p>
                                 </div>
-                                <div className="bg-gray-50 p-3 rounded text-center">
-                                    <p className="text-xs text-gray-500 uppercase">Check-ins Feitos</p>
+                                <div className="bg-secondary p-3 rounded text-center">
+                                    <p className="text-xs text-muted-foreground uppercase">Check-ins Feitos</p>
                                     <p className="text-xl font-bold text-green-600">{user?._count?.checkIns || 0}</p>
                                 </div>
                             </div>
 
                             <div className="flex justify-end pt-4">
-                                <Button type="submit" disabled={saving} className="bg-blue-600 hover:bg-blue-700">
+                                <Button type="submit" disabled={saving} className="bg-primary hover:bg-primary/90">
                                     {saving ? (
                                         <>
                                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />

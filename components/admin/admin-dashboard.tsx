@@ -120,31 +120,31 @@ export default function AdminDashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
         <Navigation />
         <div className="flex items-center justify-center h-96">
-          <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
       <Navigation />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">Painel do Administrador</h1>
-          <p className="text-gray-600">Acompanhe e cuide do crescimento dos participantes</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Painel do Administrador</h1>
+          <p className="text-muted-foreground">Acompanhe e cuide do crescimento dos participantes</p>
         </div>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Link href="/admin/users">
-            <Card className="shadow-md hover:shadow-lg transition-shadow cursor-pointer hover:border-blue-300 border-2 border-transparent">
+            <Card className="shadow-md hover:shadow-lg transition-shadow cursor-pointer hover:border-primary/50 border-2 border-transparent">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">Participantes Ativos</CardTitle>
-                <Users className="h-4 w-4 text-blue-600" />
+                <Users className="h-4 w-4 text-primary" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">{stats?.totalParticipants ?? 0}</div>
@@ -213,7 +213,7 @@ export default function AdminDashboard() {
               {!showNewBookForm ? (
                 <Button
                   onClick={() => setShowNewBookForm(true)}
-                  className="w-full bg-blue-600 hover:bg-blue-700"
+                  className="w-full bg-primary hover:bg-primary/90"
                 >
                   <Plus className="mr-2 h-4 w-4" />
                   Novo Livro
@@ -281,10 +281,10 @@ export default function AdminDashboard() {
                     />
                   </div>
                   {formMessage && (
-                    <p className="text-sm text-center text-blue-600">{formMessage}</p>
+                    <p className="text-sm text-center text-primary">{formMessage}</p>
                   )}
                   <div className="flex space-x-2">
-                    <Button type="submit" className="flex-1 bg-blue-600 hover:bg-blue-700" disabled={formLoading}>
+                    <Button type="submit" className="flex-1 bg-primary hover:bg-primary/90" disabled={formLoading}>
                       {formLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                       Criar Livro
                     </Button>
@@ -313,7 +313,7 @@ export default function AdminDashboard() {
               {!showMessageForm ? (
                 <Button
                   onClick={() => setShowMessageForm(true)}
-                  className="w-full bg-blue-600 hover:bg-blue-700"
+                  className="w-full bg-primary hover:bg-primary/90"
                 >
                   <Send className="mr-2 h-4 w-4" />
                   Nova Mensagem
@@ -333,10 +333,10 @@ export default function AdminDashboard() {
                     />
                   </div>
                   {formMessage && (
-                    <p className="text-sm text-center text-blue-600">{formMessage}</p>
+                    <p className="text-sm text-center text-primary">{formMessage}</p>
                   )}
                   <div className="flex space-x-2">
-                    <Button type="submit" className="flex-1 bg-blue-600 hover:bg-blue-700" disabled={formLoading}>
+                    <Button type="submit" className="flex-1 bg-primary hover:bg-primary/90" disabled={formLoading}>
                       {formLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                       Enviar
                     </Button>

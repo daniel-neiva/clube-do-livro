@@ -93,29 +93,29 @@ export default function EditBookPage({ params }: { params: { id: string } }) {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+            <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
                 <Navigation />
                 <div className="flex items-center justify-center h-96">
-                    <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
             <Navigation />
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <Link href="/admin/books" className="flex items-center text-gray-600 hover:text-blue-600 mb-6 w-fit">
+                <Link href="/admin/books" className="flex items-center text-muted-foreground hover:text-primary mb-6 w-fit">
                     <ArrowLeft className="h-4 w-4 mr-2" />
                     Voltar para Lista
                 </Link>
 
                 <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-gray-800 mb-2">
+                    <h1 className="text-3xl font-bold text-foreground mb-2">
                         {isNew ? "Novo Livro" : "Editar Livro"}
                     </h1>
-                    <p className="text-gray-600">
+                    <p className="text-muted-foreground">
                         {isNew ? "Adicionar uma nova leitura ao clube" : "Alterar detalhes do livro"}
                     </p>
                 </div>
@@ -212,7 +212,7 @@ export default function EditBookPage({ params }: { params: { id: string } }) {
                             </div>
 
                             <div className="flex justify-end pt-4">
-                                <Button type="submit" disabled={saving} className="bg-blue-600 hover:bg-blue-700">
+                                <Button type="submit" disabled={saving} className="bg-primary hover:bg-primary/90">
                                     {saving ? (
                                         <>
                                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />

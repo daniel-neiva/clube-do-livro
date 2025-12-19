@@ -7,8 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookOpen, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -62,15 +63,19 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800 px-4 py-8">
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="space-y-1 text-center">
           <div className="flex justify-center mb-4">
-            <div className="bg-blue-100 p-4 rounded-full">
-              <BookOpen className="h-8 w-8 text-blue-600" />
-            </div>
+            <Image
+              src="/logo.jpg"
+              alt="Clube do Livro"
+              width={130}
+              height={130}
+              className="rounded-full scale-[1.3]"
+            />
           </div>
-          <CardTitle className="text-2xl font-bold">Junte-se ao Clube</CardTitle>
+          <CardTitle className="text-2xl font-bold">Junte-se ao Clube do Livro Doutrinária</CardTitle>
           <CardDescription className="text-base">
             Comece sua jornada de leitura edificante
           </CardDescription>
@@ -156,7 +161,7 @@ export default function SignupPage() {
             )}
             <Button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700"
+              className="w-full bg-primary hover:bg-primary/90"
               disabled={isLoading}
             >
               {isLoading ? (
@@ -172,7 +177,7 @@ export default function SignupPage() {
           <div className="mt-6 text-center text-sm">
             <p className="text-muted-foreground">
               Já tem uma conta?{" "}
-              <Link href="/login" className="text-blue-600 hover:text-blue-700 font-medium">
+              <Link href="/login" className="text-primary hover:text-primary/80 font-medium">
                 Entrar
               </Link>
             </p>

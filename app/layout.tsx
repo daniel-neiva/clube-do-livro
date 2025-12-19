@@ -9,16 +9,17 @@ const inter = Inter({ subsets: ["latin"] });
 
 
 export const metadata: Metadata = {
-  title: "Clube do Livro",
-  description: "Sistema de Acompanhamento do Clube do Livro",
+  title: "Clube do Livro Doutrinária",
+  description: "Sistema de Acompanhamento do Clube do Livro Doutrinária",
   metadataBase: new URL(process.env.NEXTAUTH_URL || "http://localhost:3000"),
   icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/logo.jpg",
   },
   openGraph: {
-    title: "Clube do Livro",
-    description: "Sistema de Acompanhamento do Clube do Livro",
+    title: "Clube do Livro Doutrinária",
+    description: "Sistema de Acompanhamento do Clube do Livro Doutrinária",
     images: ["/og-image.png"],
   },
 };

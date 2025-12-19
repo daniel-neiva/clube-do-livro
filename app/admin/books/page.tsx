@@ -76,26 +76,26 @@ export default function BooksPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+            <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
                 <Navigation />
                 <div className="flex items-center justify-center h-96">
-                    <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
             <Navigation />
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-800 mb-2">Gerenciar Livros</h1>
-                        <p className="text-gray-600">Catálogo de leituras do clube</p>
+                        <h1 className="text-3xl font-bold text-foreground mb-2">Gerenciar Livros</h1>
+                        <p className="text-muted-foreground">Catálogo de leituras do clube</p>
                     </div>
                     <Link href="/admin/books/new">
-                        <Button className="bg-blue-600 hover:bg-blue-700">
+                        <Button className="bg-primary hover:bg-primary/90">
                             <Plus className="h-4 w-4 mr-2" />
                             Novo Livro
                         </Button>
@@ -127,7 +127,7 @@ export default function BooksPage() {
                                                     <span className="text-sm font-medium">Ativo</span>
                                                 </div>
                                             ) : (
-                                                <div className="flex items-center text-gray-500">
+                                                <div className="flex items-center text-muted-foreground">
                                                     <XCircle className="h-4 w-4 mr-2" />
                                                     <span className="text-sm">Inativo</span>
                                                 </div>
@@ -139,7 +139,7 @@ export default function BooksPage() {
                                         </TableCell>
                                         <TableCell className="text-right space-x-2">
                                             <Link href={`/admin/books/${book.id}`}>
-                                                <Button variant="ghost" size="icon" className="h-8 w-8 text-blue-600">
+                                                <Button variant="ghost" size="icon" className="h-8 w-8 text-primary">
                                                     <Edit className="h-4 w-4" />
                                                 </Button>
                                             </Link>
@@ -156,7 +156,7 @@ export default function BooksPage() {
                                 ))}
                                 {books.length === 0 && (
                                     <TableRow>
-                                        <TableCell colSpan={6} className="text-center py-8 text-gray-500">
+                                        <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
                                             Nenhum livro cadastrado
                                         </TableCell>
                                     </TableRow>

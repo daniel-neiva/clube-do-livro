@@ -105,10 +105,10 @@ export default function ParticipantDashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
         <Navigation />
         <div className="flex items-center justify-center h-96">
-          <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
       </div>
     );
@@ -116,7 +116,7 @@ export default function ParticipantDashboard() {
 
   if (!bookData?.book) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
         <Navigation />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <Card className="text-center shadow-lg">
@@ -142,17 +142,17 @@ export default function ParticipantDashboard() {
       case 'Um pouco atrasado':
         return 'text-amber-600 bg-amber-50';
       default:
-        return 'text-blue-600 bg-blue-50';
+        return 'text-primary bg-primary/10';
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
       <Navigation />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">Sua Jornada de Leitura</h1>
-          <p className="text-gray-600">Cada página é um passo em sua caminhada de crescimento</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Sua Jornada de Leitura</h1>
+          <p className="text-muted-foreground">Cada página é um passo em sua caminhada de crescimento</p>
         </div>
 
         {/* Book Info & Progress */}
@@ -164,36 +164,36 @@ export default function ParticipantDashboard() {
                   <CardTitle className="text-2xl mb-1">{bookData.book.title}</CardTitle>
                   <CardDescription className="text-base">por {bookData.book.author}</CardDescription>
                 </div>
-                <BookOpen className="h-8 w-8 text-blue-600" />
+                <BookOpen className="h-8 w-8 text-primary" />
               </div>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div>
                   <div className="flex justify-between text-sm mb-2">
-                    <span className="text-gray-600">Progresso Geral</span>
-                    <span className="font-semibold text-blue-600">{bookData.progressPercentage}%</span>
+                    <span className="text-muted-foreground">Progresso Geral</span>
+                    <span className="font-semibold text-primary">{bookData.progressPercentage}%</span>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-3">
+                  <div className="w-full bg-muted rounded-full h-3">
                     <div
-                      className="bg-blue-600 h-3 rounded-full transition-all duration-500"
+                      className="bg-primary h-3 rounded-full transition-all duration-500"
                       style={{ width: `${bookData.progressPercentage}%` }}
                     />
                   </div>
-                  <p className="text-sm text-gray-600 mt-2">
+                  <p className="text-sm text-muted-foreground mt-2">
                     {bookData.readChapters} de {bookData.totalChapters} capítulos lidos
                   </p>
                 </div>
                 <div className="flex flex-wrap items-center gap-4 pt-2">
                   <div className="flex items-center space-x-2">
-                    <Calendar className="h-5 w-5 text-gray-500" />
-                    <span className="text-sm text-gray-600">
+                    <Calendar className="h-5 w-5 text-muted-foreground" />
+                    <span className="text-sm text-muted-foreground">
                       Semana {bookData.currentWeek} de {bookData.book.durationWeeks}
                     </span>
                   </div>
                   {bookData.book.startDate && (
                     <div className="flex items-center space-x-2">
-                      <Clock className="h-5 w-5 text-gray-500" />
+                      <Clock className="h-5 w-5 text-muted-foreground" />
                       {isBefore(new Date(), parseISO(bookData.book.startDate)) ? (
                         <span className="text-sm text-amber-600 font-medium">
                           Início: {format(parseISO(bookData.book.startDate), "dd 'de' MMMM 'de' yyyy", { locale: ptBR })}
@@ -219,13 +219,13 @@ export default function ParticipantDashboard() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="bg-blue-50 p-4 rounded-lg">
-                  <Heart className="h-6 w-6 text-blue-600 mb-2" />
-                  <p className="text-sm text-gray-700 italic">
+                <div className="bg-accent/20 p-4 rounded-lg">
+                  <Heart className="h-6 w-6 text-primary mb-2" />
+                  <p className="text-sm text-foreground italic">
                     &quot;Sou alguem que caminha com constância&quot;
                   </p>
                 </div>
-                <div className="space-y-2 text-sm text-gray-600">
+                <div className="space-y-2 text-sm text-muted-foreground">
                   <div className="flex justify-between">
                     <span>Capítulos lidos</span>
                     <span className="font-semibold">{bookData.readChapters}</span>
@@ -244,7 +244,7 @@ export default function ParticipantDashboard() {
         <Card className="shadow-md mb-8">
           <CardHeader>
             <CardTitle className="flex items-center">
-              <CheckCircle2 className="h-5 w-5 mr-2 text-blue-600" />
+              <CheckCircle2 className="h-5 w-5 mr-2 text-primary" />
               Checklist Semanal
             </CardTitle>
             <CardDescription>
@@ -261,10 +261,10 @@ export default function ParticipantDashboard() {
                   const isCurrentWeek = week === bookData.currentWeek;
 
                   return (
-                    <div key={week} className={`p-4 rounded-lg ${isCurrentWeek ? 'bg-blue-50 border-2 border-blue-200' : 'bg-gray-50'}`}>
-                      <h3 className="font-semibold text-gray-800 mb-3">
+                    <div key={week} className={`p-4 rounded-lg ${isCurrentWeek ? 'bg-primary/10 border-2 border-primary/30' : 'bg-secondary'}`}>
+                      <h3 className="font-semibold text-foreground mb-3">
                         Semana {week}
-                        {isCurrentWeek && <span className="ml-2 text-xs text-blue-600">(Semana Atual)</span>}
+                        {isCurrentWeek && <span className="ml-2 text-xs text-primary">(Semana Atual)</span>}
                       </h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                         {chapters.map((chapter: any) => (
@@ -340,12 +340,12 @@ export default function ParticipantDashboard() {
                   />
                 </div>
                 {checkInMessage && (
-                  <p className="text-sm text-center text-blue-600">{checkInMessage}</p>
+                  <p className="text-sm text-center text-primary">{checkInMessage}</p>
                 )}
                 <div className="flex space-x-2">
                   <Button
                     type="submit"
-                    className="flex-1 bg-blue-600 hover:bg-blue-700"
+                    className="flex-1 bg-primary hover:bg-primary/90"
                     disabled={checkInLoading}
                   >
                     {checkInLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
