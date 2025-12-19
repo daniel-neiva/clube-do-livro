@@ -89,7 +89,7 @@ export default function StatsPage() {
                     <p className="text-sm text-muted-foreground">Semana Atual</p>
                     <p className="text-2xl font-bold text-primary">{stats.activeBook.currentWeek}</p>
                   </div>
-                  <div className="bg-gray-100 px-4 py-2 rounded-lg">
+                  <div className="bg-secondary px-4 py-2 rounded-lg">
                     <p className="text-sm text-muted-foreground">Total de Semanas</p>
                     <p className="text-2xl font-bold text-foreground">{stats.activeBook.totalWeeks}</p>
                   </div>
