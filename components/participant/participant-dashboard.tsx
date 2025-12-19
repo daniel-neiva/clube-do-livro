@@ -7,7 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { BookOpen, TrendingUp, CheckCircle2, Calendar, Heart, Loader2 } from "lucide-react";
+import { BookOpen, TrendingUp, CheckCircle2, Calendar, Heart, Loader2, Clock } from "lucide-react";
+import { format, parseISO, isBefore, isAfter } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
 interface BookData {
   book: any;
@@ -182,13 +184,27 @@ export default function ParticipantDashboard() {
                     {bookData.readChapters} de {bookData.totalChapters} capítulos lidos
                   </p>
                 </div>
-                <div className="flex items-center space-x-4 pt-2">
+                <div className="flex flex-wrap items-center gap-4 pt-2">
                   <div className="flex items-center space-x-2">
                     <Calendar className="h-5 w-5 text-gray-500" />
                     <span className="text-sm text-gray-600">
                       Semana {bookData.currentWeek} de {bookData.book.durationWeeks}
                     </span>
                   </div>
+                  {bookData.book.startDate && (
+                    <div className="flex items-center space-x-2">
+                      <Clock className="h-5 w-5 text-gray-500" />
+                      {isBefore(new Date(), parseISO(bookData.book.startDate)) ? (
+                        <span className="text-sm text-amber-600 font-medium">
+                          Início: {format(parseISO(bookData.book.startDate), "dd 'de' MMMM 'de' yyyy", { locale: ptBR })}
+                        </span>
+                      ) : (
+                        <span className="text-sm text-green-600">
+                          Iniciado em {format(parseISO(bookData.book.startDate), "dd/MM/yyyy", { locale: ptBR })}
+                        </span>
+                      )}
+                    </div>
+                  )}
                   <div className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(bookData.status)}`}>
                     {bookData.status}
                   </div>
