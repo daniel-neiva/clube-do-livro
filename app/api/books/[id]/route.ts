@@ -51,6 +51,9 @@ export async function PUT(
         const body = await req.json();
         const { title, author, totalChapters, durationWeeks, startDate, isActive } = body;
 
+        const numChapters = parseInt(totalChapters);
+        const numWeeks = parseInt(durationWeeks);
+
         // Logic to handle "Active" toggle - prevent multiple active books if needed, or allow it
         if (isActive) {
             // Deactivate other books if we want only one active book at a time
@@ -60,17 +63,36 @@ export async function PUT(
             });
         }
 
+        // Check if book has chapters
+        const existingChapters = await prisma.chapter.count({
+            where: { bookId: params.id }
+        });
+
+        // Update the book
         const book = await prisma.book.update({
             where: { id: params.id },
             data: {
                 title,
                 author,
-                totalChapters: parseInt(totalChapters),
-                durationWeeks: parseInt(durationWeeks),
+                totalChapters: numChapters,
+                durationWeeks: numWeeks,
                 startDate: new Date(startDate),
                 isActive
             },
         });
+
+        // Create chapters if they don't exist
+        if (existingChapters === 0 && numChapters > 0) {
+            const chaptersToCreate = Array.from({ length: numChapters }, (_, i) => ({
+                bookId: params.id,
+                chapterNumber: i + 1,
+                weekNumber: Math.ceil((i + 1) / Math.ceil(numChapters / numWeeks)),
+            }));
+
+            await prisma.chapter.createMany({
+                data: chaptersToCreate
+            });
+        }
 
         return NextResponse.json(book);
     } catch (error) {

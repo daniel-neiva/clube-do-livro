@@ -39,17 +39,38 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { title, author, totalChapters, durationWeeks, startDate } = body;
+    const { title, author, totalChapters, durationWeeks, startDate, isActive } = body;
 
+    const numChapters = parseInt(totalChapters);
+    const numWeeks = parseInt(durationWeeks);
+
+    // If this book will be active, deactivate others
+    if (isActive) {
+      await prisma.book.updateMany({
+        where: { isActive: true },
+        data: { isActive: false }
+      });
+    }
+
+    // Create book with chapters in a transaction
     const book = await prisma.book.create({
       data: {
         title,
         author,
-        totalChapters: parseInt(totalChapters),
-        durationWeeks: parseInt(durationWeeks),
+        totalChapters: numChapters,
+        durationWeeks: numWeeks,
         startDate: new Date(startDate),
-        meetingDates: [], // Initialize empty
-        isActive: false // Default to inactive
+        meetingDates: [],
+        isActive: isActive || false,
+        chapters: {
+          create: Array.from({ length: numChapters }, (_, i) => ({
+            chapterNumber: i + 1,
+            weekNumber: Math.ceil((i + 1) / Math.ceil(numChapters / numWeeks)),
+          })),
+        },
+      },
+      include: {
+        chapters: true,
       },
     });
 
