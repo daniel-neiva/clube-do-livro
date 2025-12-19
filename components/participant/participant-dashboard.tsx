@@ -41,6 +41,8 @@ export default function ParticipantDashboard() {
     try {
       const response = await fetch("/api/books/active");
       const data = await response.json();
+      console.log("API Response:", data);
+      console.log("chaptersByWeek:", data.chaptersByWeek);
       setBookData(data);
     } catch (error) {
       console.error("Error fetching book data:", error);
