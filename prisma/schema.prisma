@@ -69,6 +69,7 @@ model User {
   readingProgress ReadingProgress[]
   checkIns        CheckIn[]
   messages        Message[]
+  comments        Comment[]        @relation("UserComments")
 
   @@index([email])
   @@index([role])
@@ -154,8 +155,25 @@ model Message {
   authorId  String
   createdAt DateTime @default(now())
 
-  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  author   User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  comments Comment[]
 
+  @@index([authorId])
+  @@index([createdAt])
+}
+
+// Comment Model (User comments on messages)
+model Comment {
+  id        String   @id @default(cuid())
+  content   String   @db.Text
+  messageId String
+  authorId  String
+  createdAt DateTime @default(now())
+
+  message Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  author  User    @relation("UserComments", fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([messageId])
   @@index([authorId])
   @@index([createdAt])
 }
