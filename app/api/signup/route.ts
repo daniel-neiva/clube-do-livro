@@ -63,10 +63,19 @@ export async function POST(req: NextRequest) {
       },
       { status: 201 }
     );
-  } catch (error) {
+  } catch (error: any) {
     console.error('Signup error:', error);
+
+    // Check for Prisma unique constraint errors
+    if (error.code === 'P2002') {
+      return NextResponse.json(
+        { error: 'Este email já está cadastrado' },
+        { status: 400 }
+      );
+    }
+
     return NextResponse.json(
-      { error: 'Erro ao criar conta. Tente novamente.' },
+      { error: `Erro ao criar conta: ${error.message || 'Erro desconhecido'}` },
       { status: 500 }
     );
   }

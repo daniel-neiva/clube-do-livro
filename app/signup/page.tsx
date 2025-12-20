@@ -56,7 +56,8 @@ export default function SignupPage() {
         router.refresh();
       }
     } catch (err) {
-      setError("Ocorreu um erro. Tente novamente.");
+      console.error(err);
+      setError("Ocorreu um erro ao conectar ao servidor. Tente novamente.");
     } finally {
       setIsLoading(false);
     }
