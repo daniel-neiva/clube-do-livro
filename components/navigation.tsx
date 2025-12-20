@@ -10,7 +10,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { BookOpen, LogOut, Users, MessageSquare, BarChart3, Home, Menu, X } from "lucide-react";
+import { BookOpen, LogOut, Users, MessageSquare, BarChart3, Home, Menu, X, History } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -145,6 +145,17 @@ export function Navigation() {
               {unreadCount > 9 ? '9+' : unreadCount}
             </span>
           )}
+        </Button>
+      </Link>
+
+      <Link href="/history" onClick={() => mobile && setMobileMenuOpen(false)}>
+        <Button
+          variant={pathname === '/history' ? 'secondary' : 'ghost'}
+          size={mobile ? 'default' : 'sm'}
+          className={`${mobile ? 'w-full justify-start text-base' : ''} text-foreground`}
+        >
+          <History className="h-4 w-4 mr-2" />
+          Histórico
         </Button>
       </Link>
     </>
