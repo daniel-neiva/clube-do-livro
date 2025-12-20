@@ -70,6 +70,8 @@ model User {
   checkIns        CheckIn[]
   messages        Message[]
   comments        Comment[]        @relation("UserComments")
+  notifications   Notification[]
+
 
   @@index([email])
   @@index([role])
@@ -173,7 +175,21 @@ model Comment {
   message Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
   author  User    @relation("UserComments", fields: [authorId], references: [id], onDelete: Cascade)
 
-  @@index([messageId])
-  @@index([authorId])
   @@index([createdAt])
+}
+
+// Notification Model
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String   // 'BOOK', 'MESSAGE', 'INACTIVITY'
+  title     String
+  message   String   @db.Text
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([read])
 }

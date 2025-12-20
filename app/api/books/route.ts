@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/db';
+import { notifyAllParticipants } from '@/lib/notifications';
 
 export const dynamic = 'force-dynamic';
 
@@ -73,6 +74,14 @@ export async function POST(req: NextRequest) {
         chapters: true,
       },
     });
+
+    if (isActive) {
+      notifyAllParticipants({
+        type: 'BOOK',
+        title: 'Novo Livro Disponível!',
+        message: `O livro "${title}" de ${author} já está disponível para leitura.`,
+      });
+    }
 
     return NextResponse.json(book);
   } catch (error) {

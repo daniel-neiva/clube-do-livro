@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/db';
+import { notifyAllParticipants } from '@/lib/notifications';
 
 export const dynamic = 'force-dynamic';
 
@@ -64,6 +65,14 @@ export async function POST(req: NextRequest) {
           },
         },
       },
+    });
+
+    // Send notification to all participants
+    // We don't await this to keep the response fast
+    notifyAllParticipants({
+      type: 'MESSAGE',
+      title: 'Nova Mensagem Pastoral',
+      message: content.length > 50 ? content.substring(0, 50) + '...' : content,
     });
 
     return NextResponse.json({ message, messageText: 'Mensagem enviada com sucesso!' }, { status: 201 });
